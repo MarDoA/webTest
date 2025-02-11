@@ -24,5 +24,27 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode('text node', TextType.BOLD,'https://www.boot.dev')
         self.assertNotEqual(node,node2)    
 
+class TestTextNodeToHTMLNode(unittest.TestCase):
+    def test_text(self):
+        tnode = TextNode('txt node',TextType.NORMAL)
+        html = tnode.to_htmlnode()
+        self.assertEqual(html.tag,None)
+        self.assertEqual(html.value,'txt node')
+        self.assertEqual(html.props,None)
+    def test_img(self):
+        tnode = TextNode('alt txt',TextType.IMAGE,'rs.png')
+        html = tnode.to_htmlnode()
+        self.assertEqual(html.tag,'img')
+        self.assertEqual(html.value,'')
+        self.assertEqual(html.props,{'src':'rs.png','alt':'alt txt'})
+    def test_bold(self):
+        tnode = TextNode('bold',TextType.BOLD)
+        html = tnode.to_htmlnode()
+        self.assertEqual(html.tag,'b')
+        self.assertEqual(html.value,'bold')
+        self.assertEqual(html.props,None)
+    
+
 if __name__ == "__main__":
     unittest.main()
+    
